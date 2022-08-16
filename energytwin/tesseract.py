@@ -6,9 +6,6 @@ import os
 
 margin = 10
 
-cv2.bootstrap()
-
-
 def tesseract_decode(tx, ty, bx, by, img, img_path):
     if img is None:
         return
@@ -73,38 +70,38 @@ def extract(coordinates, img_path, debug_mode=False):
     # cv2.destroyAllWindows()
 
 
-result_path = "result/"
-source_path = "data/jbl/"
-file_paths = {"txt": [],
-              "jpg": [],
-              "boxes": []}
-
-for file in os.listdir(result_path):
-    if file.endswith(".txt"):
-        file_paths["txt"].append(result_path + file)
-        file_paths["jpg"].append(source_path + file.replace(".txt", ".jpg").replace("res_", ""))
-
-for file_path in file_paths["txt"]:
-    with open(file_path, 'rb') as f:
-        lines = f.readlines()
-        file_paths["boxes"].append(lines)
-
-for idx, jpg_path in enumerate(file_paths["jpg"]):
-    for box in file_paths["boxes"][idx]:
-        full_coordinates = box.decode("utf-8").split(",")
-        selected_coordinates = [full_coordinates[0]] + [full_coordinates[1]] + [full_coordinates[4]] + [
-            full_coordinates[5]]
-
-        selected_coordinates = [int(coordinate) for coordinate in selected_coordinates]
-        full_coordinates = [int(coordinate) for coordinate in full_coordinates]
-        # file_paths['boxes'][0][0].decode("utf-8").split(",")
-
-        img = cv2.imread(jpg_path)
-        rect = cv2.rectangle(img, (full_coordinates[0], full_coordinates[1]), (full_coordinates[4], full_coordinates[5]), (0, 255, 0))
-
-        cropped = img[full_coordinates[1]:full_coordinates[5], full_coordinates[0]:full_coordinates[4]]
-        cv2.imshow('cropped', cropped)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        extract(selected_coordinates, jpg_path)
-debug = 0
+# result_path = "../result/"
+# source_path = "../ data/jbl/"
+# file_paths = {"txt": [],
+#               "jpg": [],
+#               "boxes": []}
+#
+# for file in os.listdir(result_path):
+#     if file.endswith(".txt"):
+#         file_paths["txt"].append(result_path + file)
+#         file_paths["jpg"].append(source_path + file.replace(".txt", ".jpg").replace("res_", ""))
+#
+# for file_path in file_paths["txt"]:
+#     with open(file_path, 'rb') as f:
+#         lines = f.readlines()
+#         file_paths["boxes"].append(lines)
+#
+# for idx, jpg_path in enumerate(file_paths["jpg"]):
+#     for box in file_paths["boxes"][idx]:
+#         full_coordinates = box.decode("utf-8").split(",")
+#         selected_coordinates = [full_coordinates[0]] + [full_coordinates[1]] + [full_coordinates[4]] + [
+#             full_coordinates[5]]
+#
+#         selected_coordinates = [int(coordinate) for coordinate in selected_coordinates]
+#         full_coordinates = [int(coordinate) for coordinate in full_coordinates]
+#         # file_paths['boxes'][0][0].decode("utf-8").split(",")
+#
+#         img = cv2.imread(jpg_path)
+#         rect = cv2.rectangle(img, (full_coordinates[0], full_coordinates[1]), (full_coordinates[4], full_coordinates[5]), (0, 255, 0))
+#
+#         cropped = img[full_coordinates[1]:full_coordinates[5], full_coordinates[0]:full_coordinates[4]]
+#         cv2.imshow('cropped', cropped)
+#         cv2.waitKey(0)
+#         cv2.destroyAllWindows()
+#         extract(selected_coordinates, jpg_path)
+# debug = 0
