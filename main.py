@@ -1,6 +1,6 @@
 import cv2
 
-from tesseract.tesseract import extract
+from tesseract.tesseract import convert_image_to_text
 from tesseract.util import generate_file_paths, add_bounding_boxes, decode_boxes, show_crop
 from craft import test
 margin = 10
@@ -19,7 +19,7 @@ def process_images(file_paths, debug=False):
             if debug:
                 show_crop(img, full_coordinates[1], full_coordinates[5], full_coordinates[0], full_coordinates[4])
 
-            extract(selected_coordinates, jpg_path)
+            convert_image_to_text(selected_coordinates, jpg_path)
 
 def apply_tesseract_to_images():
     test.main()
