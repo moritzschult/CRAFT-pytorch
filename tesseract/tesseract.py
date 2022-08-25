@@ -3,9 +3,19 @@ import traceback
 import cv2
 from pytesseract import pytesseract
 
-from tesseract.util import bounding_box_not_exceeding_image, crop_image
+from tesseract.util import bounding_box_not_exceeding_image, crop_image, show_crop, decode_boxes
 
-margin = 10
+def process_images(file_paths, margin, debug=False):
+    for idx, jpg_path in enumerate(file_paths["jpg"]):
+        for box in file_paths["boxes"][idx]:
+            selected_coordinates, full_coordinates = decode_boxes(box)
+
+            img = cv2.imread(jpg_path)
+
+            if debug:
+                show_crop(img, full_coordinates[1], full_coordinates[5], full_coordinates[0], full_coordinates[4])
+
+            convert_image_to_text(selected_coordinates, jpg_path, margin)
 
 
 def tesseract_decode(dst, print_text=False):
@@ -15,7 +25,7 @@ def tesseract_decode(dst, print_text=False):
         print(text)
 
 
-def convert_image_to_text(coordinates, img_path, debug_mode=False):
+def convert_image_to_text(coordinates, img_path, margin, debug_mode=False):
     tx, ty, bx, by = coordinates[0], coordinates[1], coordinates[2], coordinates[3]
 
     # reads image 'opencv-logo.png' as grayscale
