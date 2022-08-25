@@ -1,12 +1,12 @@
 import cv2
 
-from energytwin.tesseract import extract
-from energytwin.util import generate_file_paths, add_bounding_boxes, decode_boxes, show_crop
+from tesseract.tesseract import extract
+from tesseract.util import generate_file_paths, add_bounding_boxes, decode_boxes, show_crop
 from craft import test
 margin = 10
 
-result_path = "../result/"
-source_path = "../data/jbl/"
+result_path = "result/"
+source_path = "data/jbl/"
 
 
 def process_images(file_paths, debug=False):
