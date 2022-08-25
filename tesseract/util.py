@@ -19,15 +19,16 @@ def decode_boxes(input_string):
     return selected_coordinates, full_coordinates
 
 
-def show_window(image):
-    cv2.imshow('cropped', image)
+def show_window(image, title):
+    resized_image = cv2.resize(image, (int(image.shape[1] / 6), int(image.shape[0] / 6)))
+    cv2.imshow(title, resized_image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 
 def show_crop(img, coordinate_one, coordinate_two, coordinate_three, coordinate_four):
     cropped = img[coordinate_one:coordinate_two, coordinate_three:coordinate_four]
-    show_window(cropped)
+    show_window(cropped, 'cropped')
 
 
 def bounding_box_not_exceeding_image(img, tx, ty, bx, by):
